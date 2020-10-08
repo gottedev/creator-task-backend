@@ -40,24 +40,6 @@ const getProperties = async () => {
 const data = async () => {
   try {
     const fetchProperties = await getProperties();
-    // const {
-    //   properties: [
-    //     {
-    //       media: { photos },
-    //       property_id,
-    //       bathrooms,
-    //       cluster_size,
-    //       address,
-    //       contracts: [
-    //         {
-    //           book_now_url,
-    //           prices: [{ price_per_person_per_week, room_name }],
-    //           end_date,
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // } = fetchProperties;
 
     let organisedData = {};
 
@@ -94,49 +76,6 @@ const data = async () => {
       }
     );
 
-    // const organiseData = fetchProperties.properties.map(
-    //   ({
-    //     media: { photos },
-    //     property_id,
-    //     bathrooms,
-    //     cluster_size,
-    //     address,
-    //     contracts,
-    //   }) => {
-    //     return contracts.map(
-    //       ({
-    //         book_now_url,
-    //         prices: [{ price_per_person_per_week }],
-    //         end_date,
-    //         title,
-    //       }) => {
-    //         temp[`${property_id}${title}`] = {
-    //           photos,
-    //           property_id,
-    //           bathrooms,
-    //           address,
-    //           cluster_size,
-    //           book_now_url,
-    //           price_per_person_per_week,
-    //           end_date,
-    //           living_space: 1,
-    //           unique_id: `${property_id}${title}`,
-    //         };
-    //         return {
-    //           photos,
-    //           property_id,
-    //           bathrooms,
-    //           address,
-    //           cluster_size,
-    //           book_now_url,
-    //           price_per_person_per_week,
-    //           end_date,
-    //           living_space: 1,
-    //         };
-    //       }
-    //     );
-    //   }
-    // );
     properties = organisedData;
   } catch (e) {
     console.log(e);
@@ -151,16 +90,12 @@ app.get("/properties", (req, res) => {
 });
 
 app.put("/updateproperty", jsonParser, (req, res) => {
-  // const {
-
-  // } =req.body
   properties[req.body.unique_id] = {
     ...properties[req.body.unique_id],
     ...req.body,
     address: { ...properties[req.body.unique_id.address], ...req.body.address },
   };
   const jsonData = JSON.stringify(properties);
-  // console.log(properties);
   res.send(jsonData);
 });
 
