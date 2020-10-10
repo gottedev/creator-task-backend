@@ -1,3 +1,4 @@
+const serverless = require("serverless-http");
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -113,9 +114,11 @@ app.put("/updateproperty", jsonParser, (req, res) => {
   }
 });
 
-app.listen(4000, function (err) {
-  if (err) {
-    return console.error(err);
-  }
-  console.log("Listening at http://localhost:4000/");
-});
+// app.listen(4000, function (err) {
+//   if (err) {
+//     return console.error(err);
+//   }
+//   console.log("Listening at http://localhost:4000/");
+// });
+
+module.exports.handler = serverless(app);
