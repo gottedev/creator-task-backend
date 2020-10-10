@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const isEmpty = require("lodash.isempty");
 
 const app = express();
 
@@ -90,13 +91,26 @@ app.get("/properties", (req, res) => {
 });
 
 app.put("/updateproperty", jsonParser, (req, res) => {
-  properties[req.body.unique_id] = {
-    ...properties[req.body.unique_id],
-    ...req.body,
-    address: { ...properties[req.body.unique_id.address], ...req.body.address },
-  };
-  const jsonData = JSON.stringify(properties);
-  res.send(jsonData);
+  if (isEmpty(req.body)) {
+    res.status(204).send("empty request");
+  } else if (!req.body.unique_id) {
+    res
+      .status(400)
+      .send(
+        "something is wrong with request object, unique id field not found"
+      );
+  } else {
+    properties[req.body.unique_id] = {
+      ...properties[req.body.unique_id],
+      ...req.body,
+      address: {
+        ...properties[req.body.unique_id.address],
+        ...req.body.address,
+      },
+    };
+    const jsonData = JSON.stringify(properties);
+    res.send(jsonData);
+  }
 });
 
 app.listen(4000, function (err) {
