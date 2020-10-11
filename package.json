@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon local.js",
+    "deploy": "serverless deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-serverless-express": "^3.3.8",
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

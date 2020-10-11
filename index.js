@@ -121,4 +121,4 @@ app.put("/updateproperty", jsonParser, (req, res) => {
 //   console.log("Listening at http://localhost:4000/");
 // });
 
-module.exports.handler = serverless(app);
+module.exports = app;
