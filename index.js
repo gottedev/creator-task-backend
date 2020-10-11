@@ -77,14 +77,11 @@ const data = async () => {
         );
       }
     );
-
     properties = organisedData;
   } catch (e) {
     console.log(e);
   }
 };
-
-data();
 
 app.get("/properties", (req, res) => {
   const jsonData = JSON.stringify(properties);
@@ -120,5 +117,5 @@ app.put("/updateproperty", jsonParser, (req, res) => {
 //   }
 //   console.log("Listening at http://localhost:4000/");
 // });
-
-module.exports = app;
+exports.data = data;
+exports.app = app;
