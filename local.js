@@ -1,10 +1,9 @@
-const { appPromise, data } = require("./index.js");
+const { appPromise } = require("./index.js");
 const port = process.env.PORT || 8000;
 
-// Server
-
-appPromise.then(function (app) {
+(async () => {
+  const app = await appPromise();
   app.listen(port, () => {
     console.log(`Listening on: http://localhost:${port}`);
   });
-});
+})();
