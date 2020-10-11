@@ -1,6 +1,8 @@
 const awsServerlessExpress = require("aws-serverless-express");
-const app = require("./index");
-const server = awsServerlessExpress.createServer(app);
+const { appPromise } = require("./index");
 
-module.exports.universal = (event, context) =>
-  awsServerlessExpress.proxy(server, event, context);
+module.exports.universal = async (event, context) => {
+  const app = await appPromise();
+  const server = awsServerlessExpress.createServer(app);
+  return awsServerlessExpress.proxy(server, event, context, "PROMISE").promise;
+};

@@ -59,7 +59,7 @@
     "AppLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/sample-app-dev-app"
+        "LogGroupName": "/aws/lambda/creator-production-app"
       }
     },
     "IamRoleLambdaExecution": {
@@ -87,8 +87,8 @@
               "Fn::Join": [
                 "-",
                 [
-                  "sample-app",
-                  "dev",
+                  "creator",
+                  "production",
                   "lambda"
                 ]
               ]
@@ -104,7 +104,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sample-app-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/creator-production*:*"
                     }
                   ]
                 },
@@ -115,7 +115,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sample-app-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/creator-production*:*:*"
                     }
                   ]
                 }
@@ -128,8 +128,8 @@
           "Fn::Join": [
             "-",
             [
-              "sample-app",
-              "dev",
+              "creator",
+              "production",
               {
                 "Ref": "AWS::Region"
               },
@@ -146,11 +146,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/sample-app/dev/1602349685998-2020-10-10T17:08:05.998Z/sample-app.zip"
+          "S3Key": "serverless/creator/production/1602452763855-2020-10-11T21:46:03.855Z/creator.zip"
         },
-        "FunctionName": "sample-app-dev-app",
+        "FunctionName": "creator-production-app",
         "Handler": "lambda.universal",
-        "MemorySize": 128,
+        "MemorySize": 2048,
         "Role": {
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
@@ -158,26 +158,26 @@
           ]
         },
         "Runtime": "nodejs12.x",
-        "Timeout": 6
+        "Timeout": 180
       },
       "DependsOn": [
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersion1jXTSFfM2AM29TQaVezix6ptz0eNnJyIdr3KSkZyBw": {
+    "AppLambdaVersionepMHtDpriSdwVcB5k5fh4nD2brgBNZtzyZ2actsc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "HyKSOgIot+4SAdtDdozCLEUatBh65Zea9SBXfgD5eJk="
+        "CodeSha256": "Z5yzne6a2mjVEFMPyIWU/V1dqdvQpC0k8eHtmagJLl0="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-sample-app",
+        "Name": "production-creator",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -383,13 +383,13 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1602349679282": {
+    "ApiGatewayDeployment1602452755958": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "production"
       },
       "DependsOn": [
         "ApiGatewayMethodOptions",
@@ -445,7 +445,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersion1jXTSFfM2AM29TQaVezix6ptz0eNnJyIdr3KSkZyBw"
+        "Ref": "AppLambdaVersionepMHtDpriSdwVcB5k5fh4nD2brgBNZtzyZ2actsc"
       }
     },
     "ServiceEndpoint": {
@@ -466,7 +466,7 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/production"
           ]
         ]
       }

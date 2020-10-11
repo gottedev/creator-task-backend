@@ -1,4 +1,3 @@
-const serverless = require("serverless-http");
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
@@ -46,7 +45,7 @@ const data = async () => {
     let organisedData = {};
 
     fetchProperties.properties.forEach(
-      ({
+      async ({
         media: { photos },
         property_id,
         bathrooms,
@@ -54,7 +53,7 @@ const data = async () => {
         address,
         contracts,
       }) => {
-        contracts.forEach(
+        await contracts.forEach(
           ({
             book_now_url,
             prices: [{ price_per_person_per_week }],
@@ -83,39 +82,39 @@ const data = async () => {
   }
 };
 
-app.get("/properties", (req, res) => {
-  const jsonData = JSON.stringify(properties);
-  res.send(jsonData);
-});
+exports.appPromise = async () => {
+  await data();
 
-app.put("/updateproperty", jsonParser, (req, res) => {
-  if (isEmpty(req.body)) {
-    res.status(204).send("empty request");
-  } else if (!req.body.unique_id) {
-    res
-      .status(400)
-      .send(
-        "something is wrong with request object, unique id field not found"
-      );
-  } else {
-    properties[req.body.unique_id] = {
-      ...properties[req.body.unique_id],
-      ...req.body,
-      address: {
-        ...properties[req.body.unique_id.address],
-        ...req.body.address,
-      },
-    };
+  app.get("/properties", (req, res) => {
     const jsonData = JSON.stringify(properties);
     res.send(jsonData);
-  }
-});
+  });
 
-// app.listen(4000, function (err) {
-//   if (err) {
-//     return console.error(err);
-//   }
-//   console.log("Listening at http://localhost:4000/");
-// });
+  app.put("/updateproperty", jsonParser, (req, res) => {
+    if (isEmpty(req.body)) {
+      res.status(204).send("empty request");
+    } else if (!req.body.unique_id) {
+      res
+        .status(400)
+        .send(
+          "something is wrong with request object, unique id field not found"
+        );
+    } else {
+      properties[req.body.unique_id] = {
+        ...properties[req.body.unique_id],
+        ...req.body,
+        address: {
+          ...properties[req.body.unique_id.address],
+          ...req.body.address,
+        },
+      };
+      const jsonData = JSON.stringify(properties);
+      res.send(jsonData);
+    }
+  });
+
+  return app;
+};
+
 exports.data = data;
 exports.app = app;
