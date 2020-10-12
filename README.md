@@ -9,11 +9,11 @@ Thanks for the coding challenge
 
 ## API
 
-1.properties: https://nnbqhh7p76.execute-api.eu-west-2.amazonaws.com/production/properties<br/>
+1.properties: https://creator-task-backend.herokuapp.com/properties<br/>
 
 - Request method: GET<br/>
 - Request payload: empty<br/>
-  2.updateproperty: https://nnbqhh7p76.execute-api.eu-west-2.amazonaws.com/production/updateproperty<br/>
+  2.updateproperty: https://creator-task-backend.herokuapp.com/updateproperty<br/>
 - Request method PUT<br/>
 - Request payload: {<br>
   address: {<br/>
@@ -31,7 +31,7 @@ Thanks for the coding challenge
 
 ## App Architecture
 
-1.Front end is deployed on AWS Amplify and backend is deployed on AWS Lambda
+1.Front end is deployed on AWS Amplify and backend is deployed on Heroku
 2.Every view Element like Button is a view Component, Completely Reusable and customizable from outside <br/>
 3.Icons are also made reusable and can be imported from assets/icons<br/>
 4.App consumes Higher order components like withLoader, withAuth and withModal which takes reusability to next level<br/>
