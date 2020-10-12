@@ -3,10 +3,15 @@ const axios = require("axios");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const isEmpty = require("lodash.isempty");
+const { LocalStorage } = require("node-localstorage");
+
+const localStorage = new LocalStorage("./scratch");
 
 const app = express();
 
 app.use(cors());
+
+app.options("*", cors());
 
 const jsonParser = bodyParser.json();
 
@@ -27,6 +32,8 @@ let properties = {
   },
 };
 
+localStorage.setItem("properties", JSON.stringify(properties));
+
 const getProperties = async () => {
   console.log("url", BASE_URL);
   const url = `${BASE_URL}`;
@@ -39,46 +46,52 @@ const getProperties = async () => {
 };
 
 const data = async () => {
-  try {
-    const fetchProperties = await getProperties();
+  if (localStorage.unique_id) {
+    try {
+      const fetchProperties = await getProperties();
 
-    let organisedData = {};
+      let organisedData = {};
 
-    fetchProperties.properties.forEach(
-      async ({
-        media: { photos },
-        property_id,
-        bathrooms,
-        cluster_size,
-        address,
-        contracts,
-      }) => {
-        await contracts.forEach(
-          ({
-            book_now_url,
-            prices: [{ price_per_person_per_week }],
-            end_date,
-            title,
-          }) => {
-            organisedData[`${property_id}${title}`] = {
-              photos,
-              property_id,
-              bathrooms,
-              address,
-              cluster_size,
+      fetchProperties.properties.forEach(
+        async ({
+          media: { photos },
+          property_id,
+          bathrooms,
+          cluster_size,
+          address,
+          contracts,
+        }) => {
+          await contracts.forEach(
+            ({
               book_now_url,
-              price_per_person_per_week,
+              prices: [{ price_per_person_per_week }],
               end_date,
-              living_space: 1,
-              unique_id: `${property_id}${title}`,
-            };
-          }
-        );
-      }
-    );
-    properties = organisedData;
-  } catch (e) {
-    console.log(e);
+              title,
+            }) => {
+              organisedData[`${property_id}${title}`] = {
+                photos,
+                property_id,
+                bathrooms,
+                address,
+                cluster_size,
+                book_now_url,
+                price_per_person_per_week,
+                end_date,
+                living_space: 1,
+                unique_id: `${property_id}${title}`,
+              };
+            }
+          );
+        }
+      );
+      localStorage.setItem("properties", JSON.stringify(organisedData));
+      properties = organisedData;
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    const storedProperties = localStorage.getItem("properties");
+    properties = JSON.parse(storedProperties);
   }
 };
 

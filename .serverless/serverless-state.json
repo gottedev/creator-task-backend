@@ -1,8 +1,8 @@
 {
   "service": {
-    "service": "creator",
+    "service": "venkat",
     "serviceObject": {
-      "name": "creator"
+      "name": "venkat"
     },
     "provider": {
       "stage": "production",
@@ -74,7 +74,7 @@
           "AppLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/creator-production-app"
+              "LogGroupName": "/aws/lambda/venkat-production-app"
             }
           },
           "IamRoleLambdaExecution": {
@@ -102,7 +102,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "creator",
+                        "venkat",
                         "production",
                         "lambda"
                       ]
@@ -119,7 +119,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/creator-production*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/venkat-production*:*"
                           }
                         ]
                       },
@@ -130,7 +130,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/creator-production*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/venkat-production*:*:*"
                           }
                         ]
                       }
@@ -143,7 +143,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "creator",
+                    "venkat",
                     "production",
                     {
                       "Ref": "AWS::Region"
@@ -161,9 +161,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/creator/production/1602452763855-2020-10-11T21:46:03.855Z/creator.zip"
+                "S3Key": "serverless/venkat/production/1602462892967-2020-10-12T00:34:52.967Z/venkat.zip"
               },
-              "FunctionName": "creator-production-app",
+              "FunctionName": "venkat-production-app",
               "Handler": "lambda.universal",
               "MemorySize": 2048,
               "Role": {
@@ -179,20 +179,20 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionepMHtDpriSdwVcB5k5fh4nD2brgBNZtzyZ2actsc": {
+          "AppLambdaVersionVSQm2WXg57lIpr1DmkQa79UiDtYJAsQhiXcduzOcg8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "Z5yzne6a2mjVEFMPyIWU/V1dqdvQpC0k8eHtmagJLl0="
+              "CodeSha256": "9Ha0FVYXy1fHEKClJ8tbDo3WN0Kz0Ml7aCn4mmiNYHM="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "production-creator",
+              "Name": "production-venkat",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -398,7 +398,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1602452755958": {
+          "ApiGatewayDeployment1602462886905": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -460,7 +460,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionepMHtDpriSdwVcB5k5fh4nD2brgBNZtzyZ2actsc"
+              "Ref": "AppLambdaVersionVSQm2WXg57lIpr1DmkQa79UiDtYJAsQhiXcduzOcg8"
             }
           },
           "ServiceEndpoint": {
@@ -615,20 +615,20 @@
             }
           }
         ],
-        "name": "creator-production-app",
+        "name": "venkat-production-app",
         "package": {},
         "memory": 2048,
         "timeout": 180,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionepMHtDpriSdwVcB5k5fh4nD2brgBNZtzyZ2actsc"
+        "versionLogicalId": "AppLambdaVersionVSQm2WXg57lIpr1DmkQa79UiDtYJAsQhiXcduzOcg8"
       }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
     "layers": {},
     "initialServerlessConfig": {
-      "service": "creator",
+      "service": "venkat",
       "provider": {
         "name": "aws",
         "runtime": "nodejs12.x",
@@ -642,10 +642,10 @@
       }
     },
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/home/venkat/Desktop/creator-task-backend/.serverless/creator.zip"
+    "artifact": "/home/venkat/Desktop/creator-task-backend/.serverless/venkat.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/creator/production/1602452763855-2020-10-11T21:46:03.855Z",
-    "artifact": "creator.zip"
+    "artifactDirectoryName": "serverless/venkat/production/1602462892967-2020-10-12T00:34:52.967Z",
+    "artifact": "venkat.zip"
   }
 }
