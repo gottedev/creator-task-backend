@@ -46,7 +46,8 @@ const getProperties = async () => {
 };
 
 const data = async () => {
-  if (localStorage.unique_id) {
+  const propertiesStorage = JSON.parse(localStorage.getItem("properties"));
+  if (propertiesStorage.unique_id) {
     try {
       const fetchProperties = await getProperties();
 
